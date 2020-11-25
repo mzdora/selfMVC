@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
  * Bean容器
  */
 @Slf4j
+//确保Bean的唯一性
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class BeanContainer {
     private boolean isLoadBean = false;
@@ -25,7 +26,7 @@ public class BeanContainer {
             = Arrays.asList(Component.class, Controller.class, Service.class, Repository.class);
 
     /**
-     * 扫描加载所有Bean
+     * 扫描加载所有Bean，从这个地方初始化Bean
      */
     public void loadBeans(String basePackage) {
         if (isLoadBean()) {
@@ -87,6 +88,22 @@ public class BeanContainer {
      */
     public void removeBean(Class<?> clz) {
         beanMap.remove(clz);
+    }
+
+    /**
+     * 获取Bean容器实例
+     */
+    public static BeanContainer getInstance() {
+        return ContainerHolder.HOLDER.instance;
+    }
+
+    private enum ContainerHolder {
+        HOLDER;
+        private BeanContainer instance;
+
+        ContainerHolder() {
+            instance = new BeanContainer();
+        }
     }
 
     /**
