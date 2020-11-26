@@ -13,4 +13,6 @@ public class mzController {
     public void hello() {
         log.info(mzService.helloWord());
     }
+    public void helloForAspect() { log.info("Hello Aspectj");
+    }
 }

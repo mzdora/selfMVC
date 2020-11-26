@@ -1,5 +1,6 @@
 package com.mzdora.core;
 
+import com.mzdora.aop.annotation.Aspect;
 import com.mzdora.core.annotation.Component;
 import com.mzdora.core.annotation.Controller;
 import com.mzdora.core.annotation.Repository;
@@ -22,11 +23,14 @@ import java.util.stream.Collectors;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class BeanContainer {
     private boolean isLoadBean = false;
+    /**
+     * 加载bean的注解列表
+     */
     private static final List<Class<? extends Annotation>> BEAN_ANNOTATION
-            = Arrays.asList(Component.class, Controller.class, Service.class, Repository.class);
+            = Arrays.asList(Component.class, Controller.class, Service.class, Repository.class, Aspect.class);
 
     /**
-     * 扫描加载所有Bean，从这个地方初始化Bean
+     * 扫描加载所有Bean
      */
     public void loadBeans(String basePackage) {
         if (isLoadBean()) {
